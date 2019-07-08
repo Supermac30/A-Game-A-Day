@@ -1,5 +1,7 @@
 # A-Game-A-Day
-This summer I plan on building one game a day (or two). Started on 7th july 2019
+This summer I plan on building one game a day (or two). I have lots of time and nothing to do with it, which is why this challenge is perfect.
+
+Started on 7th july 2019
 
 ## Tools 
 In this repository I will practice using old technology and learn new ones. The tools to build these games are:
