@@ -1,6 +1,8 @@
 # A-Game-A-Day
 This summer I plan on building one game a day (or two). I have lots of time and nothing to do with it, which is why this challenge is perfect.
 
+These games will be posted on a future website of mine at a later date.
+
 Started on 7th july 2019
 
 ## Tools 
