@@ -13,6 +13,8 @@ In this repository I will practice using old technology and learn new ones. The 
 - Unity
 
 ## TODO
+This list will continuely be updated as I come up with new ideas
+
 Easy to make games I could build in an hour or two:
 - [x] Snake
 - [ ] Pong
