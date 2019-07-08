@@ -28,7 +28,7 @@ Easy to make games I could build in an hour or two:
 - [ ] 2046
 - [ ] Space Invaders
 - [ ] Diner Dash
-- [ ] of Hanoi
+- [ ] Tower of Hanoi
 - [ ] BattleShips
 - [ ] MineSweeper
 - [ ] An idle Clicker
