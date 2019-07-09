@@ -36,6 +36,7 @@ Easy to make games I could build in an hour or two:
 - [ ] Tennis
 - [ ] Katamari Demaci
 - [ ] Ballz
+- [ ] Guitar Heroes
 - [ ] Solitare
 
 Harder to build Games:
@@ -80,3 +81,7 @@ Games to practice mobile development or cool input methods:
 - [ ] Duck Hunt
 - [ ] Fruit Ninja
 - [ ] porting any of the above games to mobile
+
+Not necissarily games:
+- [ ] Javascript UI API
+- [ ] Javascript physics API
