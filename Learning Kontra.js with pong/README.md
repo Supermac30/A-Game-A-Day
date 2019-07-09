@@ -9,7 +9,7 @@ Created on 8th July 2019
 ## Controls
 Up and Down arrow keys for movement.
 
-### What to change when revisiting:
+## What to change when revisiting:
 - UI
 - create my own collision detection function, built in function 'Sprite.collidesWith(object)' is buggy
 - Winning Screen
