@@ -21,7 +21,7 @@ This list will continuely be updated as I come up with new ideas
 
 Easy to make games I could build in an hour or two:
 - [x] Snake
-- [ ] Pong
+- [x] Pong
 - [ ] Breakout
 - [ ] An endless runner
 - [ ] Air Hockey
