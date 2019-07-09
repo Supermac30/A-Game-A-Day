@@ -57,15 +57,6 @@ var enemy = kontra.sprite({
     }
 })
 
-var background = kontra.sprite({
-	render() {
-		this.context.fillStyle = '#FFFFFF';
-		this.context.beginPath();
-		this.context.text();
-		this.context.fill();
-	}
-})
-
 var ball = kontra.sprite({
     x: kontra.canvas.width / 2,
     y: kontra.canvas.height / 2,
