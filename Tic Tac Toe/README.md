@@ -10,7 +10,7 @@ mode where the first move is completely random.
 
 Created on 12th July 2019. I lagged behind for a couple of days. I will make up for that.
 
-## controls
+## Controls
 Click to place a circle on the board. Press 'r' to restart. Click on the button below to make the first move random or calculated, easy or hard mode.
 
 ## What to change when revisiting:
