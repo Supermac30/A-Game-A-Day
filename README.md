@@ -57,7 +57,7 @@ Games to practice AI:
 - [ ] Go
 - [ ] Texas Hold Em'
 - [ ] Connect 4
-- [ ] Checkers
+- [x] Checkers
 - [x] Tic Tac Toe
 
 Games to practice realistic physics:
