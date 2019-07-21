@@ -228,7 +228,7 @@ function draw() {
 }
 
 function coolAI() {
-  board = minimax(board, false, 4)[1];
+  board = minimax(board, false, 6, -13, 13)[1];
 }
 
 var lastClicked = "0";
@@ -246,7 +246,7 @@ function mouseClicked() {
   }
 }
 
-function minimax(curBoard, isMin, depth) {
+function minimax(curBoard, isMin, depth, alpha, beta) {
   var branches = posBoards(curBoard, curBoard.turn);
   var bestBranch = [0, 0]; // [rating, board object]
   if (depth == 0 || curBoard.isGameOver()) { 
@@ -271,19 +271,31 @@ function minimax(curBoard, isMin, depth) {
     if (!isMin){      
       bestBranch[0] = -13;
       for (var i = 0; i < branches.length; i++) {
-        var vertex = minimax(branches[i], !isMin, depth-1);
+        var vertex = minimax(branches[i], !isMin, depth-1, alpha, beta);
         if (vertex[0] > bestBranch[0]) {
           bestBranch[0] = vertex[0];
           bestBranch[1] = branches[i];
+        }
+        if (alpha < vertex[0]) {
+          alpha = vertex[0];
+        }
+        if (beta <= alpha) {
+          break;
         }
       }
     } else {
       bestBranch[0] = 13;
       for (var i = 0; i < branches.length; i++) {
-        var vertex = minimax(branches[i], !isMin, depth-1);
+        var vertex = minimax(branches[i], !isMin, depth-1, alpha, beta);
         if (vertex[0] < bestBranch[0]) {
           bestBranch[0] = vertex[0];
           bestBranch[1] = branches[i];
+        }
+        if (beta > vertex[0]) {
+          beta = vertex[0];
+        }
+        if (beta <= alpha) {
+          break;
         }
       }
     }
@@ -302,26 +314,6 @@ function posBoards(state, turn){
       newState.copy(state);
       
       if (state.pieces[i].isBlack && turn == 1) {
-        if (newState.move(loc, (locx+1)+""+(locy+1))) {
-          boards.push(newState);
-          var newState = new Board(1);
-          newState.copy(state);
-        }
-        if (newState.move(loc, (locx-1)+""+(locy+1))) {
-          boards.push(newState);
-          var newState = new Board(1);
-          newState.copy(state);
-        }
-        if (newState.move(loc, (locx+1)+""+(locy-1))) {
-          boards.push(newState);
-          var newState = new Board(1);
-          newState.copy(state);
-        }
-        if (newState.move(loc, (locx-1)+""+(locy-1))) {
-          boards.push(newState);
-          var newState = new Board(1);
-          newState.copy(state);
-        }
         // checks if the black piece can eat
         if (newState.move(loc, (locx+2)+""+(locy+2))) {
           boards.push(newState);
@@ -343,29 +335,29 @@ function posBoards(state, turn){
           var newState = new Board(1);
           newState.copy(state);
         }
-      } else if (!state.pieces[i].isBlack && turn == 0){
-        newState.turn = 0;
+        // checks if a black piece can move
         if (newState.move(loc, (locx+1)+""+(locy+1))) {
           boards.push(newState);
-          var newState = new Board(0);
+          var newState = new Board(1);
           newState.copy(state);
         }
         if (newState.move(loc, (locx-1)+""+(locy+1))) {
           boards.push(newState);
-          var newState = new Board(0);
+          var newState = new Board(1);
           newState.copy(state);
         }
         if (newState.move(loc, (locx+1)+""+(locy-1))) {
           boards.push(newState);
-          var newState = new Board(0);
+          var newState = new Board(1);
           newState.copy(state);
         }
         if (newState.move(loc, (locx-1)+""+(locy-1))) {
           boards.push(newState);
-          var newState = new Board(0);
+          var newState = new Board(1);
           newState.copy(state);
         }
-        
+      } else if (!state.pieces[i].isBlack && turn == 0){
+        newState.turn = 0;
         // checks if the white piece can eat
         if (newState.move(loc, (locx+2)+""+(locy+2))) {
           boards.push(newState);
@@ -385,6 +377,27 @@ function posBoards(state, turn){
         if (newState.move(loc, (locx-2)+""+(locy-2))) {
           boards.push(newState);
           var newState = new Board(1);
+          newState.copy(state);
+        }
+        // checks if a white piece can move
+        if (newState.move(loc, (locx+1)+""+(locy+1))) {
+          boards.push(newState);
+          var newState = new Board(0);
+          newState.copy(state);
+        }
+        if (newState.move(loc, (locx-1)+""+(locy+1))) {
+          boards.push(newState);
+          var newState = new Board(0);
+          newState.copy(state);
+        }
+        if (newState.move(loc, (locx+1)+""+(locy-1))) {
+          boards.push(newState);
+          var newState = new Board(0);
+          newState.copy(state);
+        }
+        if (newState.move(loc, (locx-1)+""+(locy-1))) {
+          boards.push(newState);
+          var newState = new Board(0);
           newState.copy(state);
         }
       }
