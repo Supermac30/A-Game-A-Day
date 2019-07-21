@@ -10,4 +10,4 @@ To play download this directory and run the index.html file in your browser.
 Click on the piece to move. You play as white.
 
 ## What to change when revisiting:
-- Make the minimax algorithm much faster (alpha-beta pruning, iterative deepening, 
+- Make the minimax algorithm much faster (alpha-beta pruning, iterative deepening)
