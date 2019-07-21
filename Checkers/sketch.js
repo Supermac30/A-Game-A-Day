@@ -138,30 +138,29 @@ class Board {
     return false;
   }
   
-  isGameOver() {
+  isGameOver(branches) {
     // 0 is no, 1 is white, 2 is black
-    var white = false;
-    var black = false;
-    for (var i = 0; i < this.pieces.length; i++) {
-      if (this.pieces[i] != undefined) {
-        if (this.pieces[i].isBlack) {
-          black = true;
-        } else {
-          white = true;
-        }
-        if (white && black) {
-          return 0;
-        }
+    if (branches == undefined) {
+      branches = posBoards(this, this.turn);    
+    }
+    if (branches.length == 0) {
+      if (this.turn == 0) {
+        return 2;
+      } else {
+        return 1;
       }
     }
-    if (white) {
-      return 1;
-    }
-    return 2;
+    return 0;
   }
   
-  rate() {
-    // rates the board from black's pooint of view
+  rate(branches) {
+    // rates the board from black's point of view
+    if (this.isGameOver(branches) == 1) {
+      return -13;
+    } else if (this.isGameOver(branches) == 2) {
+      return 13;
+    }
+    
     var numWhite = 0;
     var numBlack = 0;
     for (var i = 0; i < this.pieces.length; i++) {
@@ -211,13 +210,14 @@ function setup() {
   createCanvas(400, 400);
 }
 
+var state = 0;
 function draw() {
   background(220);
   board.build();
   if (board.turn == 1) {
     coolAI();
+    state = board.isGameOver();
   }
-  state = board.isGameOver();
   textSize(50);
   fill(255,0,0);
   if (state == 1) {
@@ -228,7 +228,7 @@ function draw() {
 }
 
 function coolAI() {
-  board = minimax(board, false, 6, -13, 13)[1];
+  board = minimax(board, false, 8, -13, 13)[1];
 }
 
 var lastClicked = "0";
@@ -242,6 +242,7 @@ function mouseClicked() {
     } else {
       board.move(lastClicked, x+""+y);
       lastClicked = "0";
+      state = board.isGameOver();
     }
   }
 }
@@ -249,20 +250,22 @@ function mouseClicked() {
 function minimax(curBoard, isMin, depth, alpha, beta) {
   var branches = posBoards(curBoard, curBoard.turn);
   var bestBranch = [0, 0]; // [rating, board object]
-  if (depth == 0 || curBoard.isGameOver()) { 
+  if (depth == 0 || curBoard.isGameOver(branches)) { 
     if (!isMin) {
       bestBranch[0] = -13;
       for (var i = 0; i < branches.length; i++) {
-        if (branches[i].rate() > bestBranch[0]) {
-          bestBranch[0] = branches[i].rate();
+        var rating = branches[i].rate(branches) - depth/10;
+        if (rating > bestBranch[0]) {
+          bestBranch[0] = rating;
           bestBranch[1] = branches[i];
         }
       }
     } else {
       bestBranch[0] = 13;
       for (var i = 0; i < branches.length; i++) {
-        if (branches[i].rate() < bestBranch[0]) {
-          bestBranch[0] = branches[i].rate();
+        var rating = branches[i].rate(branches) + depth/10; 
+        if (rating < bestBranch[0]) {
+          bestBranch[0] = rating;
           bestBranch[1] = branches[i]
         }
       }
