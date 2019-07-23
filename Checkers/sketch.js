@@ -249,7 +249,7 @@ function mouseClicked() {
 
 function minimax(curBoard, isMin, depth, alpha, beta) {
   var branches = posBoards(curBoard, curBoard.turn);
-  var bestBranch = [0, 0]; // [rating, board object]
+  var bestBranch = [0, curBoard]; // [rating, board object]
   if (depth == 0 || curBoard.isGameOver(branches)) { 
     if (!isMin) {
       bestBranch[0] = -13;
