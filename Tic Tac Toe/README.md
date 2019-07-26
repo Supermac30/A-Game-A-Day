@@ -8,6 +8,8 @@ computationally expensive if alpha beta pruning is implemented and if symmetrica
 I found that playing the same game over and over with the AI putting the X at the top left corner is boring so I started the game on easy 
 mode where the first move is completely random.
 
+To play this game download this directory and run the index.html file in your browser or visit https://funonabun.tk/Games/TicTacToe/Tictactoe.html.
+
 Created on 12th July 2019. I lagged behind for a couple of days. I will make up for that.
 
 ## Controls
