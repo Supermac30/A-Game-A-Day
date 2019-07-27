@@ -36,7 +36,7 @@ Easy to make games I could build in an hour or two:
 - [ ] Tennis
 - [ ] Katamari Demaci
 - [ ] Ballz
-- [ ] Guitar Heroes
+- [ ] Guitar Hero
 - [ ] Solitare
 
 Harder to build Games:
