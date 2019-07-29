@@ -1,7 +1,6 @@
 let bw = 20;
 let speed = 5;
 let screen = 0;
-let takeInp = true;
 let snake = new Snake();
 let food = new Food();
 
@@ -36,26 +35,39 @@ function draw() {
 }
 
 function inp() {
-  if (takeInp) {
-    if (keyCode == UP_ARROW && snake.dir[1] != 1) {
-      snake.dir = [0, -1];
-      takeInp = false;
-    }
-    if (keyCode == DOWN_ARROW && snake.dir[1] != -1) {
-      snake.dir = [0, 1];
-      takeInp = false;
-    }
-    if (keyCode == LEFT_ARROW && snake.dir[0] != 1) {
-      snake.dir = [-1, 0];
-      takeInp = false;
-    }
-    if (keyCode == RIGHT_ARROW && snake.dir[0] != -1) {
-      snake.dir = [1, 0];
-      takeInp = false;
-    }
+  if (lastPressed == 0 || keyCode == UP_ARROW && snake.dir[1] != 1) {
+    snake.dir = [0, -1];
   }
+  else if (lastPressed == 1 || keyCode == DOWN_ARROW && snake.dir[1] != -1) {
+    snake.dir = [0, 1];
+  }
+  else if (lastPressed == 2 || keyCode == LEFT_ARROW && snake.dir[0] != 1) {
+    snake.dir = [-1, 0];
+  }
+  else if (lastPressed == 3 || keyCode == RIGHT_ARROW && snake.dir[0] != -1) {
+    snake.dir = [1, 0];
+  }
+
   if (key == "r") {
     screen = 0;
+    lastPressed = -1;
+    snake = new Snake();
+  }
+}
+
+var lastPressed = -1; //0 - up  1 - down  2 - left  3 - right
+function mouseClicked() {
+  if (mouseX > fp[0] + 20  && snake.dir[0] != 1) {
+    lastPressed = 3;
+  }
+  else if (mouseX < fp[0] - 20 && snake.dir[0] != -1) {
+    lastPressed = 2;
+  }
+  else if (mouseY > fp[1] + 20 && snake.dir[1] != 1) {
+    lastPressed = 1;
+  }
+  else if (mouseY < fp[1] - 20 && snake.dir[1] != -1) {
+    lastPressed = 0;
   }
 }
 
@@ -64,15 +76,18 @@ function game() {
     snake.move();
     snake.eat();
     if (snake.isDead()) {
-      snake = new Snake();
       screen = 1;
     }
-    takeInp = true;
   }
   drawGrid();
   inp();
   snake.buildSnake();
   food.buildFood();
+}
+
+var fp = [] // holds the x,y loc of the first location pressed
+function mousePressed() {
+  fp = [mouseX, mouseY];
 }
 
 function gameOver() {
@@ -81,11 +96,11 @@ function gameOver() {
   rect(0, 0, 1000, 100);
   fill(0, 0, 255);
   textSize(15);
-  text("Game Over. Press r to restart", 100, 50);
+  text("Game Over. Press R to restart.\nYou ended with " + snake.length + " points.", 100, 50);
 }
 
 function Snake() {
-  this.body = [[0, 1, [0, 0]]];
+  this.body = [[10, 10, [0, 0]]];
   this.length = 0;
   this.dir = [0, 0];
   
