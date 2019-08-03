@@ -12,5 +12,5 @@ Created on 2nd August 2019
 - space to shoot
 
 ## What to improve when revisiting
-- add a UI
+- add better UI
 - add the ability to change difficulty
