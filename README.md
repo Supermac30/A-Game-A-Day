@@ -26,7 +26,7 @@ Easy to make games I could build in an hour or two:
 - [ ] An endless runner
 - [ ] Air Hockey
 - [ ] 2046
-- [ ] Space Invaders
+- [x] Space Invaders
 - [ ] Diner Dash
 - [ ] Tower of Hanoi
 - [ ] BattleShips
