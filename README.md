@@ -1,7 +1,7 @@
 # A-Game-A-Day
 This summer I plan on building one game every few days. I have lots of time and nothing to do with it, which is why this challenge is perfect.
 
-These games will be posted on a future website of mine at a later date.
+These games are posted on my website.
 
 Started on 7th july 2019
 
@@ -85,4 +85,4 @@ Games to practice mobile development or cool input methods:
 
 Not necissarily games:
 - [ ] Javascript UI API
-- [ ] Javascript physics API
+- [x] Javascript physics API
