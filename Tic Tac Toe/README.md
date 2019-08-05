@@ -18,4 +18,3 @@ Click to place a circle on the board. Press 'r' to restart. Click on the button 
 ## What to change when revisiting:
 - Add a two player option
 - Optimise the minimax algorithm
-- Fix a bug where a tie is chosen instead of a win when on hard mode and placing the circle in the middle middle, then top right
