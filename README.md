@@ -62,7 +62,7 @@ Games to practice AI:
 - [x] Tic Tac Toe
 
 Games to practice realistic physics:
-- [ ] Mini Golf
+- [x] Mini Golf
 - [ ] Angry Birds
 - [ ] RagDoll Platformer
 
