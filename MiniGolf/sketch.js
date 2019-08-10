@@ -252,7 +252,7 @@ var testLevel = new Level(new Ball(50, 300),
                           new Flag(40, 590, false),
                           3);
 levels = [testLevel];
-cl = 3;
+cl = 0;
 points = 0
 
 function setup() {
