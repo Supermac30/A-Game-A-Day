@@ -1,6 +1,8 @@
 let g = [0, 9.8]; // gravitational constant
-let density = 0.3;
+let density = 0.8;
 let t = 0.2;
+
+let cFriction = 0.1; // Coefficient of kinetic friction for all surfaces
 
 class Ball {
   constructor(x, y) {
@@ -12,6 +14,7 @@ class Ball {
     this.velocity = [0,0];
     this.forces = [];  // holds all the forces acting on the object 
     this.dragC = 0.5;
+    this.normalForce = 0;
   }
   draw() {
     // builds the ball 
@@ -23,13 +26,19 @@ class Ball {
     this.drag(); // applies the force of drag
     // F/m = a
     
-    var collides = this.isGroundCollision()
-    if (collides != -1) {
-      this.groundCollision(collides);
+    var collides0 = this.isGroundCollision()
+    if (collides0 != -1) {
+      this.groundCollision(collides0);
     }
-    collides = this.isWallCollision()
-    if (collides != -1) {
-      this.wallCollision(collides);
+    var collides1 = this.isWallCollision()
+    if (collides1 != -1) {
+      this.wallCollision(collides1);
+    }
+    // if there is a collision
+    if (collides1 + collides0 != -2) {
+      this.kFriction();
+    } else {
+      this.normalForce = 0;
     }
     this.average();
 
@@ -60,6 +69,11 @@ class Ball {
     force[1] = -magnitude * this.velocity[1];
     this.forces.push(force);
   }
+  kFriction() {
+    var kForce = cFriction*this.normalForce;
+    kForce *= this.velocity[0];
+    this.forces.push([kForce, 0]);
+  }
   average() {
     // finds the average of all the forces, hence the acceleration
     this.avg = [0,0];
@@ -74,7 +88,6 @@ class Ball {
   groundCollision(collides) {
     // assuming all collisions are on flat surfaces for now
     // vf = -k*vi
-    this.velocity[0] = this.velocity[0] * this.cor;
     this.velocity[1] = -this.velocity[1] * this.cor;
     var total = 0;
     for (var i = 0; i < this.forces.length; i++) {
@@ -83,13 +96,13 @@ class Ball {
       else if (levels[cl].grounds[collides].loc[1] < this.loc[1] && this.forces[i][1] < 0)
         total += this.forces[i][1];
     }
+    this.normalForce = -total;
     this.forces.push([0, -total]);
   }
   wallCollision(collides) {
     // assuming all collisions are on flat surfaces for now
     // vf = -k*vi
     this.velocity[0] = -this.velocity[0] * this.cor;
-    this.velocity[1] = this.velocity[1] * this.cor;
     var total = 0;
     for (var i = 0; i < this.forces.length; i++) {
       if (levels[cl].walls[collides].loc[0] > this.loc[0] && this.forces[i][0] < 0){
@@ -98,6 +111,7 @@ class Ball {
       else if (levels[cl].walls[collides].loc[0] < this.loc[0] && this.forces[i][0] > 0)
         total += this.forces[i][0];
     }
+    this.normalForce = -total;
     this.forces.push([0, -total]);
   }
   isGroundCollision() {
@@ -123,7 +137,7 @@ class Ball {
     return -1;
   }
   hit(x, y) {
-    this.forces.push([x, y]);
+    this.forces.push([x * 1.3, y * 1.3]);
   }
 }
 
@@ -164,6 +178,7 @@ class Flag {
 
 class Level {
   constructor(ball, grounds, walls, flag, par) {
+    this.start = [ball.loc[0], ball.loc[1]];
     this.ball = ball;
     this.grounds = grounds;
     this.walls = walls;
@@ -193,7 +208,11 @@ class Level {
     if (this.flag.isWinner(this.ball.loc[0], this.ball.loc[1])) {
       console.log("YAY");
       cl++;
+      this.ball.loc[0] = this.start[0];
+      this.ball.loc[1] = this.start[1];
+      this.ball.velocity = [0,0];
       points += this.par - this.hits;
+      this.hits = 0;
     }
   }
   
@@ -231,10 +250,9 @@ var testLevel = new Level(new Ball(50, 300),
                           [new Ground(0, 0, 0, 10), new Ground(0, 450, 400, 10)],
                           [new Ground(0,0,10,600)],
                           new Flag(40, 590, false),
-                          2
-                          );
+                          3);
 levels = [testLevel];
-cl = 4;
+cl = 3;
 points = 0
 
 function setup() {
@@ -245,35 +263,35 @@ function setup() {
                         [new Ground(0, height-10, width, 10),
                         new Ground(width/4, height - 90, width/2, 90),
                         new Ground(3*width/8, height - 170, width/4, 170)],
-                        [new Ground(width/4, height-90, 1, 90),
-                        new Ground(3*width/4, height-90, 1, 90),
-                        new Ground(3*width/8, height-170, 1, 170),
-                        new Ground(5*width/8, height-170, 1, 170)],
+                        [new Ground(width/4 - 1, height-90, 1, 90),
+                        new Ground(3*width/4 + 1, height-90, 1, 90),
+                        new Ground(3*width/8 - 1, height-170, 1, 170),
+                        new Ground(5*width/8 + 1, height-170, 1, 170)],
                         new Flag(width - 40, 590),
                         3);
   levels[2] = new Level(new Ball(10, 40),
                         [new Ground(0, height-10, width, 10),
                         new Ground(0, 60, 80, 1),
-                        new Ground(200, 500, 100, 1),
-                        new Ground(450, 360, 100, 1)],
+                        new Ground(201, 500, 98, 1),
+                        new Ground(450, 360, 97, 5)],
                         [new Ground(0, 61, 80, 539),
                         new Ground(200, 0, 100, 500),
-                        new Ground(450, 362, 100, 529)],
+                        new Ground(450, 365, 98, 529)],
                         new Flag(width - 40, 590),
-                        4);
+                        8);
   levels[3] = new Level(new Ball(10, height - 40),
                         [new Ground(0, height-10, width, 10),
                          new Ground(width/4, height-150, width/2, 20),
                          new Ground(0, 330, 120, 20),
                          new Ground(width-120, 330, 120, 20),
-                         new Ground(width/4, 198, width/2, 20)],
+                         new Ground(width/4, 195, width/2, 20)],
                         [new Ground(width/2 - 25, 200, 50, height-211), 
                          new Ground(width/4-2, height-150, 1, 20),
                          new Ground(3*width/4+1, height-150, 1, 20),
                          new Ground(120, 330, 1, 20),
                          new Ground(width-122, 330, 1, 20),
                          new Ground(width/4 - 1, 198, 1, 20),
-                         new Ground(3*width/4, 198, 1, 20)],
+                         new Ground(3*width/4 - 1, 199, 1, 18)],
                         new Flag(width - 40, 590),
                         6);
 }
@@ -296,6 +314,7 @@ function endScreen() {
   fill(255,255,255);
   text("click here to try and beat your score", 100, 500);
 }
+
 
 function mouseClicked() {
   if (cl >= 4) {
