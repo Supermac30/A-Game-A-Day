@@ -1,19 +1,21 @@
 let g = [0, 9.8]; // gravitational constant
-let density = 0.5;
+let density = 1.8;
 let t = 0.2;
+let cFriction = 0.1; // Coefficient of kinetic friction for all surfaces
 
 let apply = 400;
 
 class Ball {
   constructor(x, y) {
     this.loc = [x, y];
-    this.radius = 20; 
+    this.radius = 15; 
     this.color = 0xFFFFFF;
     this.mass = 1;
-    this.cor = 0.89; // coefficient of restitution
+    this.cor = 0.5 // coefficient of restitution
     this.velocity = [0,0];
     this.forces = [];  // holds all the forces acting on the object 
     this.dragC = 0.5;
+    this.normalF = 0;
   }
   draw() {
     // builds the ball 
@@ -25,13 +27,19 @@ class Ball {
     this.drag(); // applies the force of drag
     // F/m = a
     
-    var collides = this.isGroundCollision()
-    if (collides != -1) {
-      this.groundCollision(collides);
+    var collides0 = this.isGroundCollision()
+    if (collides0 != -1) {
+      this.groundCollision(collides0);
     }
-    collides = this.isWallCollision()
-    if (collides != -1) {
-      this.wallCollision(collides);
+    var collides1 = this.isWallCollision()
+    if (collides1 != -1) {
+      this.wallCollision(collides1);
+    }
+    // if there is a collision
+    if (collides1 + collides0 != -2) {
+      this.kFriction();
+    } else {
+      this.normalForce = 0;
     }
     this.average();
 
@@ -47,6 +55,8 @@ class Ball {
       this.loc[0] = width
     }
     
+    forces = this.forces;  // Remove when using
+    
     this.forces = [];
   }
   gravity() {
@@ -58,6 +68,11 @@ class Ball {
     force[0] = -magnitude * this.velocity[0];
     force[1] = -magnitude * this.velocity[1];
     this.forces.push(force);
+  }
+  kFriction() {
+    var kForce = cFriction*this.normalForce;
+    kForce *= this.velocity[0];
+    this.forces.push([kForce, 0]);
   }
   average() {
     // finds the average of all the forces, hence the acceleration
@@ -73,7 +88,6 @@ class Ball {
   groundCollision(collides) {
     // assuming all collisions are on flat surfaces for now
     // vf = -k*vi
-    this.velocity[0] = this.velocity[0] * this.cor;
     this.velocity[1] = -this.velocity[1] * this.cor;
     var total = 0;
     for (var i = 0; i < this.forces.length; i++) {
@@ -82,13 +96,13 @@ class Ball {
       else if (grounds[collides].loc[1] < this.loc[1] && this.forces[i][1] < 0)
         total += this.forces[i][1];
     }
+    this.normalForce = -total;
     this.forces.push([0, -total]);
   }
   wallCollision(collides) {
     // assuming all collisions are on flat surfaces for now
     // vf = -k*vi
     this.velocity[0] = -this.velocity[0] * this.cor;
-    this.velocity[1] = this.velocity[1] * this.cor;
     var total = 0;
     for (var i = 0; i < this.forces.length; i++) {
       if (walls[collides].loc[0] > this.loc[0] && this.forces[i][0] < 0){
@@ -97,7 +111,8 @@ class Ball {
       else if (walls[collides].loc[0] < this.loc[0] && this.forces[i][0] > 0)
         total += this.forces[i][0];
     }
-    this.forces.push([0, -total]);
+    this.normalForce = -total;
+    this.forces.push([total, 0]);
   }
   isGroundCollision() {
     // checks if a collision has occured
@@ -144,11 +159,13 @@ let grounds = [new Ground(0, 500, 1000, 50), new Ground(0,0,1000,10)];
 let walls = [new Ground(0,0,10,1000), new Ground(0,0,10,1000)]
 
 function setup() {
-  createCanvas(550, 450);
+  createCanvas(700, 600);
   frameRate(60);
   grounds[0].loc[1] = height-50;
   walls[1].loc[0] = width - 10;
 }
+
+let forces = [];
 
 function draw() {
   background(220);
@@ -173,6 +190,10 @@ function draw() {
   text("coefficient of restitution: " + ball.cor, 20, start + 160);
   text("force of gravity " + g, 20, start + 180);
   text("density of air: " + density, 20, start + 200);
+  text("drag coefficent: " + ball.dragC, 20, start + 220);
+  text("drag force: " + forces[1], 20, start + 240);
+  text("normal force: " + ball.normalForce, 20, start + 260);
+  text("all forces: " + forces, 20 , start + 280);
 }
 
 function keyPressed(){
