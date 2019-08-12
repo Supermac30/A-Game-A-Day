@@ -57,7 +57,7 @@ Games to practice AI:
 - [ ] Go
 - [ ] Texas Hold Em'
 - [ ] Connect 4
-- [ ] Dots and Boxes
+- [x] Dots and Boxes
 - [x] Checkers
 - [x] Tic Tac Toe
 
