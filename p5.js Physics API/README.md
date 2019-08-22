@@ -13,7 +13,6 @@ To play the demo download this directory and run the index.html file or go to ht
 Use WASD to apply a force on the ball
 
 ## What to change when revisiting:
-- Add the ability to change the settings in a menu screen.
 - make the collision function generalised so that objects do not have to be floors or walls.
 - Add the ability for different balls to interact.
 - Fix a bug where the ball seems to stick to the wall when moving at a fast speed.
