@@ -1,5 +1,5 @@
-# A-Game-A-Day
-This summer I plan on building one game every few days. I have lots of time and nothing to do with it, which is why this challenge is perfect.
+# Mini-Games
+This is where I store all games I develop
 
 These games are posted on my website.
 
