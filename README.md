@@ -53,7 +53,7 @@ Harder to build Games:
 
 Games to practice AI:
 - [ ] Pac-Man
-- [ ] Chess
+- [x] Chess
 - [ ] Go
 - [ ] Texas Hold Em'
 - [ ] Connect 4
