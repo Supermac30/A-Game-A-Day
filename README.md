@@ -83,6 +83,6 @@ Games to practice mobile development or cool input methods:
 - [ ] Fruit Ninja
 - [ ] porting any of the above games to mobile
 
-Not necissarily games:
+Not necessarily games:
 - [ ] Javascript UI API
 - [x] Javascript physics API
