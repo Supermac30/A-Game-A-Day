@@ -3,7 +3,7 @@ This is a version of dots and boxes written in the javascript framework p5.js, i
 
 This game is not complete yet, there is a bug where the AI will take a box as a player after taking a lot of boxes in a row.
 
-To play download this directory and run the html file or go to https://funonabun.tk/Games/DotsAndBoxes/DotsAndBoxes.html.
+To play download this directory and run the html file or go to https://supermac30.github.io./Games/Checkers/Checkers.html.
 ## Control
 Click on where you want the line to be placed.
 
