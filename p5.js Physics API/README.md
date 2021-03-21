@@ -7,7 +7,7 @@ can be changed to adjust the simulation.
 
 I will use this in future projects.
 
-To play the demo download this directory and run the index.html file or go to https://funonabun.tk/Games/PhysicsAPIDemo/PhysicsAPIDemo.html.
+To play the demo download this directory and run the index.html file or go to [Physics API Demo (supermac30.github.io)](https://supermac30.github.io/Games/PhysicsAPIDemo/PhysicsAPIDemo.html).
 
 ## Controls
 Use WASD to apply a force on the ball
